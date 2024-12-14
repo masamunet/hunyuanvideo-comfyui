@@ -5,6 +5,7 @@ ENV TZ=UTC
 
 RUN apt-get update && apt-get install -y \
   git \
+  wget \
   python3 \
   python3-pip \
   python3-venv \
@@ -32,6 +33,9 @@ WORKDIR /workspace
 RUN git clone https://github.com/comfyanonymous/ComfyUI.git
 WORKDIR /workspace/ComfyUI
 RUN pip3 install -r requirements.txt
+
+RUN mkdir -p /workspace/ComfyUI/models && \
+  chown -R comfy:comfy /workspace/ComfyUI/models
 
 COPY setup-comfy.sh download-models.sh install-extentions.sh /workspace/
 RUN chmod +x /workspace/*.sh
