@@ -3,6 +3,7 @@ version: "3.8"
 services:
   comfy:
     build: .
+    image: comfyui:latest
     ports:
       - "8188:8188"
     volumes:
@@ -30,4 +31,4 @@ services:
           
           touch /workspace/ComfyUI/models/.downloaded
         fi
-        python main.py
+        python main.py --listen
