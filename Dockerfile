@@ -49,7 +49,7 @@ RUN /workspace/install-extentions.sh
 
 WORKDIR /workspace/ComfyUI
 
-COPY --chown=comfy:comfy entrypoint.sh /workspace/
+COPY --chown=comfy:comfy entrypoint.sh download-models.ipynb /workspace/
 RUN chmod +x /workspace/entrypoint.sh
 
 EXPOSE 8188
