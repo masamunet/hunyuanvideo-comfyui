@@ -3,7 +3,7 @@ version: "3.8"
 services:
   comfy:
     build: .
-    image: comfyui-hunyuanvideo:latest
+    image: masamunet/comfyui-hunyuanvideo:latest
     ports:
       - "8888:8888"
       - "8188:8188"
