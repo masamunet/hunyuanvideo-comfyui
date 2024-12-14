@@ -1,4 +1,7 @@
 #!/bin/bash
+
+cd /workspace/ComfyUI
+
 mkdir -p models/clip models/vae models/loras models/checkpoints models/text_encoders models/unet models/controlnet models/upscale_models models/diffusion_models models/LLM
 
 # 必要なモデルをダウンロード

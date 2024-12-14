@@ -37,9 +37,15 @@ RUN git clone https://github.com/comfyanonymous/ComfyUI.git
 WORKDIR /workspace/ComfyUI
 RUN pip install -r requirements.txt
 
-WORKDIR /workspace/ComfyUI/custom_nodes
-RUN git clone https://github.com/ltdrdata/ComfyUI-Manager.git && \
-  git clone https://github.com/11cafe/comfyui-workspace-manager.git
+
+COPY --chown=comfy:comfy download-models.sh /workspace/
+RUN chmod +x /workspace/download-models.sh
+
+COPY --chown=comfy:comfy install-extentions.sh /workspace/
+RUN chmod +x /workspace/install-extentions.sh
+
+COPY --chown=comfy:comfy setup-comfy.sh /workspace/
+RUN chmod +x /workspace/setup-comfy.sh
 
 WORKDIR /workspace/ComfyUI
 
