@@ -36,8 +36,9 @@ RUN pip3 install -r requirements.txt
 
 RUN mkdir -p /workspace/ComfyUI/models && \
   mkdir -p /workspace/ComfyUI/custom_nodes && \
-  chown -R comfy:comfy /workspace/ComfyUI/models && \
-  chown -R comfy:comfy /workspace/ComfyUI/custom_nodes
+  mkdir -p /workspace/ComfyUI/user && \
+  touch /workspace/ComfyUI/comfyui.log && \
+  chown -R comfy:comfy /workspace/ComfyUI
 
 COPY setup-comfy.sh install-extentions.sh /workspace/
 RUN chmod +x /workspace/*.sh
@@ -49,7 +50,7 @@ RUN /workspace/install-extentions.sh
 
 WORKDIR /workspace/ComfyUI
 
-COPY --chown=comfy:comfy entrypoint.sh download-models.ipynb /workspace/
+COPY --chown=comfy:comfy entrypoint.sh /workspace/
 RUN chmod +x /workspace/entrypoint.sh
 
 EXPOSE 8188
