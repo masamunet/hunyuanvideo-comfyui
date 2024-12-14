@@ -12,3 +12,9 @@ docker-compose.override.yaml
 # Docker volumes and data
 data/
 volumes/
+
+models/
+output/
+__pycache__/
+*.pyc
+.env

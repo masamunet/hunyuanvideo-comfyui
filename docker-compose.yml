@@ -1,0 +1,17 @@
+version: "3.8"
+
+services:
+  comfy:
+    build: .
+    ports:
+      - "8188:8188"
+    volumes:
+      - ./models:/app/models
+      - ./output:/app/output
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]

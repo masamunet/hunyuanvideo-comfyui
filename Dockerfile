@@ -39,4 +39,4 @@ RUN chmod +x /workspace/entrypoint.sh
 EXPOSE 8188
 
 ENTRYPOINT ["/workspace/entrypoint.sh"]
-CMD ["python3", "main.py", "--listen", "0.0.0.0", "--port", "8188", "--verbose", "DEBUG"]
+CMD ["python3", "main.py"]
