@@ -6,7 +6,7 @@ services:
     ports:
       - "8188:8188"
     volumes:
-      - ./models:/app/models
+      - ./models:/workspace/ComfyUI/models
       - ./output:/app/output
     deploy:
       resources:
@@ -18,16 +18,16 @@ services:
     entrypoint: ["/bin/bash", "-c"]
     command:
       - |
-        if [ ! -f /app/models/.downloaded ]; then
-          mkdir -p /app/models/clip /app/models/vae /app/models/loras /app/models/checkpoints /app/models/text_encoders /app/models/unet /app/models/controlnet /app/models/upscale_models /app/models/diffusion_models /app/models/LLM
+        if [ ! -f /workspace/ComfyUI/models/.downloaded ]; then
+          mkdir -p /workspace/ComfyUI/models/clip /workspace/ComfyUI/models/vae /workspace/ComfyUI/models/loras /workspace/ComfyUI/models/checkpoints /workspace/ComfyUI/models/text_encoders /workspace/ComfyUI/models/unet /workspace/ComfyUI/models/controlnet /workspace/ComfyUI/models/upscale_models /workspace/ComfyUI/models/diffusion_models /workspace/ComfyUI/models/LLM
           
-          wget -nc -P /app/models/clip https://huggingface.co/comfyanonymous/flux_text_encoders/resolve/main/clip_l.safetensors
-          wget -nc -P /app/models/clip https://huggingface.co/comfyanonymous/flux_text_encoders/resolve/main/t5xxl_fp16.safetensors
-          wget -nc -P /app/models/clip https://huggingface.co/comfyanonymous/flux_text_encoders/resolve/main/t5xxl_fp8_e4m3fn.safetensors
+          wget -nc -P /workspace/ComfyUI/models/clip https://huggingface.co/comfyanonymous/flux_text_encoders/resolve/main/clip_l.safetensors
+          wget -nc -P /workspace/ComfyUI/models/clip https://huggingface.co/comfyanonymous/flux_text_encoders/resolve/main/t5xxl_fp16.safetensors
+          wget -nc -P /workspace/ComfyUI/models/clip https://huggingface.co/comfyanonymous/flux_text_encoders/resolve/main/t5xxl_fp8_e4m3fn.safetensors
           
-          wget -nc -P /app/models/vae https://huggingface.co/Kijai/HunyuanVideo_comfy/resolve/main/hunyuan_video_vae_bf16.safetensors
-          wget -nc -P /app/models/diffusion_models https://huggingface.co/Kijai/HunyuanVideo_comfy/resolve/main/hunyuan_video_720_cfgdistill_fp8_e4m3fn.safetensors
+          wget -nc -P /workspace/ComfyUI/models/vae https://huggingface.co/Kijai/HunyuanVideo_comfy/resolve/main/hunyuan_video_vae_bf16.safetensors
+          wget -nc -P /workspace/ComfyUI/models/diffusion_models https://huggingface.co/Kijai/HunyuanVideo_comfy/resolve/main/hunyuan_video_720_cfgdistill_fp8_e4m3fn.safetensors
           
-          touch /app/models/.downloaded
+          touch /workspace/ComfyUI/models/.downloaded
         fi
         python main.py
