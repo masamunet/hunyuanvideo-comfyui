@@ -37,13 +37,12 @@ RUN pip3 install -r requirements.txt
 RUN mkdir -p /workspace/ComfyUI/models && \
   chown -R comfy:comfy /workspace/ComfyUI/models
 
-COPY setup-comfy.sh download-models.sh install-extentions.sh /workspace/
+COPY setup-comfy.sh install-extentions.sh /workspace/
 RUN chmod +x /workspace/*.sh
 RUN chown comfy:comfy /workspace/*.sh
 
 USER comfy
 RUN /workspace/setup-comfy.sh
-RUN /workspace/download-models.sh
 RUN /workspace/install-extentions.sh
 
 WORKDIR /workspace/ComfyUI
