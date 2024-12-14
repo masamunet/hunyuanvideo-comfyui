@@ -28,6 +28,7 @@ USER root
 
 RUN pip3 install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cu124
 RUN pip3 install --no-cache-dir numpy
+RUN pip3 install jupyter notebook
 
 WORKDIR /workspace
 RUN git clone https://github.com/comfyanonymous/ComfyUI.git
@@ -48,12 +49,16 @@ USER comfy
 RUN /workspace/setup-comfy.sh
 RUN /workspace/install-extentions.sh
 
+# ノートブックディレクトリを作成
+RUN mkdir -p /workspace/notebooks && \
+  chown -R comfy:comfy /workspace/notebooks
+
+COPY --chown=comfy:comfy notebooks/download-models.ipynb notebooks/run-comfyui.ipynb /workspace/notebooks/
+
+
 WORKDIR /workspace/ComfyUI
 
-COPY --chown=comfy:comfy entrypoint.sh /workspace/
-RUN chmod +x /workspace/entrypoint.sh
+EXPOSE 8888
 
-EXPOSE 8188
-
-ENTRYPOINT ["/workspace/entrypoint.sh"]
-CMD ["python3", "main.py", "--listen"]
+ENTRYPOINT []
+CMD ["jupyter", "notebook", "--ip=0.0.0.0", "--port=8888", "--allow-root", "--NotebookApp.token=''", "--NotebookApp.password=''"]

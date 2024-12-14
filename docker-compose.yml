@@ -5,10 +5,12 @@ services:
     build: .
     image: comfyui:latest
     ports:
+      - "8888:8888"
       - "8188:8188"
     volumes:
       - ./models:/workspace/ComfyUI/models
       - ./output:/workspace/ComfyUI/output
+      - ./notebooks:/workspace/notebooks
     deploy:
       resources:
         reservations:
