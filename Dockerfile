@@ -47,6 +47,10 @@ RUN chmod +x /workspace/install-extentions.sh
 COPY --chown=comfy:comfy setup-comfy.sh /workspace/
 RUN chmod +x /workspace/setup-comfy.sh
 
+RUN /workspace/setup-comfy.sh
+RUN /workspace/download-models.sh
+RUN /workspace/install-extentions.sh
+
 WORKDIR /workspace/ComfyUI
 
 # entrypointスクリプトを追加
