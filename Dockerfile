@@ -1,5 +1,8 @@
 FROM nvidia/cuda:12.4.0-runtime-ubuntu22.04
 
+ENV DEBIAN_FRONTEND=noninteractive
+ENV TZ=UTC
+
 RUN apt-get update && apt-get install -y \
   git \
   python3 \
@@ -15,9 +18,16 @@ RUN apt-get update && apt-get install -y \
   libopenblas-dev \
   && rm -rf /var/lib/apt/lists/*
 
+# 非rootユーザーを作成
+RUN useradd -m -u 1000 comfy
+RUN mkdir -p /workspace && chown -R comfy:comfy /workspace
+
 RUN pip install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cu124
 
 RUN pip install --no-cache-dir numpy
+
+# 以降の操作をcomfyユーザーで実行
+USER comfy
 
 WORKDIR /workspace
 RUN git clone https://github.com/comfyanonymous/ComfyUI.git
