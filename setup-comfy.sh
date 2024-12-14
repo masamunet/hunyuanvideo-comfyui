@@ -10,6 +10,8 @@ pip3 install --user -r requirements.txt
 
 # SageAttentionのセットアップ
 cd /workspace
-git clone https://github.com/thu-ml/SageAttention.git
-cd SageAttention
-python3 setup.py install
+pip install triton>=2.3.0
+pip install sageattention
+# git clone https://github.com/thu-ml/SageAttention.git
+# cd SageAttention
+# python3 setup.py install
