@@ -1,14 +1,15 @@
 #!/bin/bash
+set -e
 
-pip install onnxruntime
-pip install triton==2.1.0
-pip install opencv-python-headless
-pip install bitsandbytes
+cd /workspace/ComfyUI
 
-# ffmpeg
-apt install ffmpeg -y
+# 必要なPythonパッケージのインストール
+pip3 install --user torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cu124
+pip3 install --user xformers
+pip3 install --user -r requirements.txt
 
-# SageAttention
-git clone https://github.com/thu-ml/SageAttention.git
+# SageAttentionのセットアップ
+cd /workspace
+git clone https://github.com/SomeAuthor/SageAttention.git
 cd SageAttention
-python setup.py install
+pip3 install --user -e .

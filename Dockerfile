@@ -18,42 +18,32 @@ RUN apt-get update && apt-get install -y \
   libopenblas-dev \
   && rm -rf /var/lib/apt/lists/*
 
+RUN ln -s /usr/bin/python3 /usr/bin/python
 
-# 非rootユーザーを作成
 RUN useradd -m -u 1000 comfy
 RUN mkdir -p /workspace && chown -R comfy:comfy /workspace
 
-RUN pip install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cu124
+USER root
 
-RUN pip install --no-cache-dir numpy
-
-# 以降の操作をcomfyユーザーで実行
-USER comfy
+RUN pip3 install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cu124
+RUN pip3 install --no-cache-dir numpy
 
 WORKDIR /workspace
 RUN git clone https://github.com/comfyanonymous/ComfyUI.git
-
-
 WORKDIR /workspace/ComfyUI
-RUN pip install -r requirements.txt
+RUN pip3 install -r requirements.txt
 
+COPY setup-comfy.sh download-models.sh install-extentions.sh /workspace/
+RUN chmod +x /workspace/*.sh
+RUN chown comfy:comfy /workspace/*.sh
 
-COPY --chown=comfy:comfy download-models.sh /workspace/
-RUN chmod +x /workspace/download-models.sh
-
-COPY --chown=comfy:comfy install-extentions.sh /workspace/
-RUN chmod +x /workspace/install-extentions.sh
-
-COPY --chown=comfy:comfy setup-comfy.sh /workspace/
-RUN chmod +x /workspace/setup-comfy.sh
-
+USER comfy
 RUN /workspace/setup-comfy.sh
 RUN /workspace/download-models.sh
 RUN /workspace/install-extentions.sh
 
 WORKDIR /workspace/ComfyUI
 
-# entrypointスクリプトを追加
 COPY --chown=comfy:comfy entrypoint.sh /workspace/
 RUN chmod +x /workspace/entrypoint.sh
 
