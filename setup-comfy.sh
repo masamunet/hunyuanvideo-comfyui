@@ -10,6 +10,6 @@ pip3 install --user -r requirements.txt
 
 # SageAttentionのセットアップ
 cd /workspace
-git clone https://github.com/SomeAuthor/SageAttention.git
+git clone https://github.com/thu-ml/SageAttention.git
 cd SageAttention
-pip3 install --user -e .
+python3 setup.py install
