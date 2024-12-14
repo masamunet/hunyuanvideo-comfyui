@@ -18,6 +18,7 @@ RUN apt-get update && apt-get install -y \
   libopenblas-dev \
   && rm -rf /var/lib/apt/lists/*
 
+
 # 非rootユーザーを作成
 RUN useradd -m -u 1000 comfy
 RUN mkdir -p /workspace && chown -R comfy:comfy /workspace
@@ -49,4 +50,4 @@ RUN chmod +x /workspace/entrypoint.sh
 EXPOSE 8188
 
 ENTRYPOINT ["/workspace/entrypoint.sh"]
-CMD ["python3", "main.py"]
+CMD ["python3", "main.py", "--listen"]
