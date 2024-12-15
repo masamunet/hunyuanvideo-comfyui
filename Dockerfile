@@ -55,10 +55,12 @@ RUN mkdir -p /workspace/notebooks && \
 
 COPY --chown=comfy:comfy notebooks/download-models.ipynb notebooks/run-comfyui.ipynb /workspace/notebooks/
 
+COPY runpod.yaml /
 
 WORKDIR /
 
 EXPOSE 8888 8188
 
 ENTRYPOINT []
+
 # CMD ["jupyter", "notebook", "--ip=0.0.0.0", "--port=8888", "--allow-root", "--NotebookApp.token=''", "--NotebookApp.password=''"]

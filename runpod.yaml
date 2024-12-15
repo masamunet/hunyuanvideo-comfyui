@@ -1,0 +1,8 @@
+version: '1.0.0'
+services:
+  - name: 'ComfyUI'
+    port: 8188
+    proxy_port: 8188
+  - name: 'Jupyter'
+    port: 8888
+    proxy_port: 8888
