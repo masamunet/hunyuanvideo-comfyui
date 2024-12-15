@@ -23,7 +23,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 WORKDIR /workspace
 
-COPY setup-comfy.sh install-extentions.sh /
+COPY setup-comfy.sh install-extentions.sh README.md /
 RUN chmod +x /*.sh \
   && /setup-comfy.sh \
   && /install-extentions.sh
