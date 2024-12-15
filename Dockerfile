@@ -56,7 +56,7 @@ RUN mkdir -p /workspace/notebooks && \
 COPY --chown=comfy:comfy notebooks/download-models.ipynb notebooks/run-comfyui.ipynb /workspace/notebooks/
 
 
-WORKDIR /workspace/ComfyUI
+WORKDIR /
 
 EXPOSE 8888
 
