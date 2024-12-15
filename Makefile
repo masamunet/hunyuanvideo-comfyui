@@ -1,4 +1,4 @@
-DOCKER_USERNAME ?= your-dockerhub-username
+DOCKER_USERNAME ?= masamunet
 IMAGE_NAME = comfyui-hunyuanvideo
 TAG ?= latest
 
