@@ -17,6 +17,8 @@ RUN apt-get update && apt-get install -y \
   libavformat-dev \
   libswscale-dev \
   libopenblas-dev \
+  nginx \
+  openssh-server \
   && rm -rf /var/lib/apt/lists/*
 
 RUN ln -s /usr/bin/python3 /usr/bin/python
@@ -28,7 +30,7 @@ USER root
 
 RUN pip3 install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cu124
 RUN pip3 install --no-cache-dir numpy
-RUN pip3 install jupyter notebook
+RUN pip3 install jupyterlab notebook
 
 WORKDIR /workspace
 RUN git clone https://github.com/comfyanonymous/ComfyUI.git
@@ -62,5 +64,4 @@ WORKDIR /
 EXPOSE 8888 8188
 
 ENTRYPOINT []
-
-# CMD ["jupyter", "notebook", "--ip=0.0.0.0", "--port=8888", "--allow-root", "--NotebookApp.token=''", "--NotebookApp.password=''"]
+CMD ["jupyter", "lab", "--ip=0.0.0.0", "--port=8888", "--allow-root", "--NotebookApp.token=''", "--NotebookApp.password=''"]
