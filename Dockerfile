@@ -58,7 +58,7 @@ COPY --chown=comfy:comfy notebooks/download-models.ipynb notebooks/run-comfyui.i
 
 WORKDIR /
 
-EXPOSE 8888
+EXPOSE 8888 8188
 
 ENTRYPOINT []
 # CMD ["jupyter", "notebook", "--ip=0.0.0.0", "--port=8888", "--allow-root", "--NotebookApp.token=''", "--NotebookApp.password=''"]
