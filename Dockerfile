@@ -3,7 +3,7 @@ FROM nvidia/cuda:12.4.0-runtime-ubuntu22.04
 ENV DEBIAN_FRONTEND=noninteractive
 ENV TZ=UTC
 
-RUN apt-get update && apt-get install -y \
+RUN apt-get update && apt-get install -y --no-install-recommends \
   git \
   wget \
   python3 \
@@ -19,7 +19,8 @@ RUN apt-get update && apt-get install -y \
   libopenblas-dev \
   nginx \
   openssh-server \
-  && rm -rf /var/lib/apt/lists/*
+  && rm -rf /var/lib/apt/lists/* \
+  && apt-get clean
 
 RUN ln -s /usr/bin/python3 /usr/bin/python
 
@@ -28,38 +29,42 @@ RUN mkdir -p /workspace && chown -R comfy:comfy /workspace
 
 USER root
 
-RUN pip3 install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cu124
-RUN pip3 install --no-cache-dir numpy
-RUN pip3 install jupyterlab notebook
+RUN pip3 install --no-cache-dir \
+  torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cu124 \
+  numpy \
+  jupyter \
+  jupyterlab \
+  "notebook<7.0.0" \
+  jupyter_contrib_nbextensions \
+  jupyter_nbextensions_configurator \
+  ipywidgets
+
+RUN jupyter contrib nbextension install --system && \
+  jupyter nbextension enable --system widgetsnbextension
 
 WORKDIR /workspace
 RUN git clone https://github.com/comfyanonymous/ComfyUI.git
 WORKDIR /workspace/ComfyUI
-RUN pip3 install -r requirements.txt
+RUN pip3 install --no-cache-dir -r requirements.txt
 
-RUN mkdir -p /workspace/ComfyUI/models && \
-  mkdir -p /workspace/ComfyUI/custom_nodes && \
-  mkdir -p /workspace/ComfyUI/user && \
-  touch /workspace/ComfyUI/comfyui.log && \
-  chown -R comfy:comfy /workspace/ComfyUI
+RUN mkdir -p /workspace/ComfyUI/models \
+  /workspace/ComfyUI/custom_nodes \
+  /workspace/ComfyUI/user \
+  && touch /workspace/ComfyUI/comfyui.log \
+  && chown -R comfy:comfy /workspace/ComfyUI
 
-COPY setup-comfy.sh install-extentions.sh /workspace/
-RUN chmod +x /workspace/*.sh
-RUN chown comfy:comfy /workspace/*.sh
+COPY setup-comfy.sh install-extentions.sh /
+RUN chmod +x /*.sh && \
+  chown comfy:comfy /*.sh
 
 USER comfy
-RUN /workspace/setup-comfy.sh
-RUN /workspace/install-extentions.sh
+RUN /setup-comfy.sh && \
+  /install-extentions.sh
 
-# ノートブックディレクトリを作成
-RUN mkdir -p /workspace/notebooks && \
-  chown -R comfy:comfy /workspace/notebooks
-
-COPY --chown=comfy:comfy notebooks/download-models.ipynb notebooks/run-comfyui.ipynb /workspace/notebooks/
-
+COPY --chown=comfy:comfy notebooks/download-models.ipynb notebooks/run-comfyui.ipynb /workspace/
 COPY runpod.yaml /
 
-WORKDIR /
+WORKDIR /workspace
 
 EXPOSE 8888 8188
 
