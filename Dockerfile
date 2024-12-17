@@ -31,7 +31,7 @@ RUN chmod +x /*.sh \
   && /install-extentions.sh
 
 COPY notebooks/download-models.ipynb /workspace_tmp/
-RUN chmod 644 /workspace_tmp/download-models.ipynb
+RUN chmod 644 /workspace_tmp/download-models.ipynb /workspace_tmp/setup_sageattention.ipynb
 
 WORKDIR /workspace
 

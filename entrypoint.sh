@@ -8,9 +8,10 @@ if [ -d "/workspace_tmp" ]; then
     rm -rf /workspace_tmp
 fi
 
-# SageAttentionのセットアップ
-cd /
-bash setup_sageAttention.sh
+# TODO: 環境変数によって、自動的にセットアップするかどうか分岐させる
+# # SageAttentionのセットアップ
+# cd /
+# bash setup_sageAttention.sh
 
 cd /workspace
 
