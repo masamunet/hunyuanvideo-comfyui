@@ -30,7 +30,7 @@ RUN chmod +x /*.sh \
   && /setup-comfy.sh \
   && /install-extentions.sh
 
-COPY notebooks/download-models.ipynb /workspace_tmp/
+COPY notebooks/download-models.ipynb notebooks/setup_sageattention.ipynb /workspace_tmp/
 RUN chmod 644 /workspace_tmp/download-models.ipynb /workspace_tmp/setup_sageattention.ipynb
 
 WORKDIR /workspace

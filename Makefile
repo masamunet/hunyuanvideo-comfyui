@@ -5,7 +5,7 @@ TAG ?= latest
 # 使い方:
 #   make build                  # イメージをローカルにビルドする
 #   make push                   # イメージをDocker Hubにプッシュする
-#   make build-and-push        # ビルドしてDocker Hubにプッシュする
+#   make build-and-push (bp)   # ビルドしてDocker Hubにプッシュする
 #
 # 環境変数:
 #   DOCKER_USERNAME  - Docker Hubのユーザー名 (デフォルト: your-dockerhub-username)
@@ -23,5 +23,6 @@ build:
 push:
 	docker push $(DOCKER_USERNAME)/$(IMAGE_NAME):$(TAG)
 
-build-and-push:
+build-and-push: bp
+bp:
 	docker buildx build --platform linux/amd64 --push -t $(DOCKER_USERNAME)/$(IMAGE_NAME):$(TAG) .
