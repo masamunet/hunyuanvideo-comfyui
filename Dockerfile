@@ -23,18 +23,19 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
   && apt-get clean \
   && git lfs install
 
-WORKDIR /workspace
+WORKDIR /workspace_tmp
 
-COPY setup-comfy.sh install-extentions.sh README.md /
+COPY entrypoint.sh setup-comfy.sh install-extentions.sh setup_sageAttention.sh README.md runpod.yaml /
 RUN chmod +x /*.sh \
   && /setup-comfy.sh \
   && /install-extentions.sh
 
-COPY notebooks/download-models.ipynb /workspace/
+COPY notebooks/download-models.ipynb /workspace_tmp/
+RUN chmod 644 /workspace_tmp/download-models.ipynb
 
-WORKDIR /workspace
+WORKDIR /workspace_tmp
 
 EXPOSE 8888 8188
 
-ENTRYPOINT []
-CMD ["jupyter", "lab", "--ip=0.0.0.0", "--port=8888", "--allow-root", "--NotebookApp.token=''", "--NotebookApp.password=''", "--no-browser", "--ServerApp.allow_origin=*", "--ServerApp.allow_remote_access=True", "--notebook-dir=/workspace"]
+ENTRYPOINT ["/entrypoint.sh"]
+CMD ["jupyter", "lab", "--ip=0.0.0.0", "--port=8888", "--allow-root", "--NotebookApp.token=''", "--NotebookApp.password=''", "--no-browser", "--ServerApp.allow_origin=*", "--ServerApp.allow_remote_access=True", "--notebook-dir=/workspace_tmp"]
