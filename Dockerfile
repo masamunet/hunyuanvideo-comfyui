@@ -33,7 +33,7 @@ RUN chmod +x /*.sh \
 COPY notebooks/download-models.ipynb /workspace_tmp/
 RUN chmod 644 /workspace_tmp/download-models.ipynb
 
-WORKDIR /workspace_tmp
+WORKDIR /workspace
 
 EXPOSE 8888 8188
 
