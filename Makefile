@@ -1,4 +1,4 @@
-DOCKER_USERNAME ?= masamunet
+DOCKER_USERNAME ?= $(shell grep DOCKER_USERNAME .env | cut -d '=' -f2 | tr -d ' ')
 IMAGE_NAME = comfyui-hunyuanvideo
 TAG ?= latest
 
