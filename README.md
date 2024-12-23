@@ -24,3 +24,4 @@ ComfyUIを使用してHunyuan Videoモデルを実行するためのDocker環境
 
 - 初回起動時は必要なモデルのダウンロードが必要です
 - GPUメモリ使用量に注意してください
+- .env.exampleを参考に .envファイルを作成。Dockerhubのユーザー名を設定してください
